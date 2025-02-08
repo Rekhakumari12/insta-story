@@ -1,0 +1,42 @@
+.container {
+  max-width: 630px;
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile_container {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(45deg, yellow, #f64160, #ef1eef, red);
+  padding: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.profile {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story_container {
+  display: flex;
+  justify-content: center;
+}
+
+.story {
+}
