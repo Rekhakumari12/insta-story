@@ -1,43 +1,40 @@
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { data } from '../data'
 import { StoryPreview } from './StoryPreview'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ProgressBar } from './ProgressBar'
 
 export const Story = () => {
   const { username } = useParams()
-  const userStories = data.filter((user) => user.user.username === username)[0].stories
+  const navigate = useNavigate()
+
+  // find the user and fallback to an empty array if not found
+  const userStories = data.find((user) => user.user.username === username)?.stories || []
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
-  const storyDuration = 5000
+  const storyDuration = 5 // duration in seconds
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (currentIndex <= userStories.length) handleNextStory()
-    }, storyDuration)
-    return () => clearInterval(interval)
-  }, [currentIndex])
+  const handleNextStory = () => {
+    if (currentIndex < userStories.length - 1) {
+      setCurrentIndex((prev) => prev + 1)
+    } else {
+      navigate('/')
+    }
+  }
 
   const handlePrevStory = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prev) => prev - 1)
     }
   }
-  const handleNextStory = () => {
-    if (currentIndex < userStories.length - 1) {
-      setCurrentIndex((prev) => prev + 1)
-    }
-  }
 
-  const getProgressClassName = (id: number) => {
-    console.log(id, currentIndex, '===')
-    if (id < currentIndex) {
+  // setting progress class dynamically on active, paused, finished state
+  const getProgressClassName = (index: number) => {
+    if (index < currentIndex) {
       return 'progress progress_bar_finished'
-    } else if (id === currentIndex) {
-      return isPaused
-        ? 'progress progress-bar-active progress-bar-paused'
-        : 'progress progress-bar-active'
+    } else if (index === currentIndex) {
+      return 'progress progress_bar_active'
     } else {
       return 'progress'
     }
@@ -50,30 +47,30 @@ export const Story = () => {
       </button>
       <div>
         <div className="progress_bars">
-          {userStories.map((story) => (
+          {userStories.map((story, index) => (
             <ProgressBar
-              className={getProgressClassName(story.storyId)}
-              value={Math.floor(storyDuration / 1000)}
-              key={story.storyId}
+              key={story.storyId + '-' + (index === currentIndex ? currentIndex : '')} // include currentIndex in key for active story to force remount & animation restart
+              className={getProgressClassName(index)}
+              value={storyDuration}
+              onAnimationEnd={index === currentIndex ? handleNextStory : undefined} // only attach onAnimationEnd to the active progress bar
+              paused={index === currentIndex ? isPaused : false}
             />
           ))}
         </div>
         <div className="stories">
-          {userStories.map((story, index) => {
-            return (
+          {userStories.map(
+            (story, index) =>
               index === currentIndex && (
                 <StoryPreview
+                  key={story.storyId}
                   story={story}
                   isPaused={isPaused}
                   setIsPaused={setIsPaused}
-                  key={story.storyId}
                 />
               )
-            )
-          })}
+          )}
         </div>
       </div>
-
       <button className="arrow_button" onClick={handleNextStory}>
         {'>'}
       </button>

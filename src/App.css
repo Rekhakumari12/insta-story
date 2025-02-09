@@ -106,10 +106,7 @@ body {
   animation-name: ProgressBar;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-}
-
-.progress-bar-paused {
-  animation-play-state: paused;
+  animation-duration: inherit;
 }
 
 .progress_bar_finished {
@@ -133,10 +130,10 @@ body {
 }
 
 @keyframes ProgressBar {
-  0% {
+  from {
     width: 0%;
   }
-  100% {
+  to {
     width: 100%;
   }
 }

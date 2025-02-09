@@ -29,4 +29,6 @@ export interface StoryPreviewProps {
 export interface ProgressBarProps {
   className: string
   value: number
+  onAnimationEnd?: () => void
+  paused: boolean
 }
