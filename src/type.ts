@@ -11,7 +11,6 @@ export interface UserData {
     type: string
     url: string
     postedAt: string
-    duration: number
   }[]
 }
 
@@ -19,4 +18,17 @@ export interface Story {
   type: string
   url: string
   storyId: number
+}
+
+export interface StoryPreviewProps {
+  story: Story
+  isPaused: boolean
+  setIsPaused: (value: boolean) => void
+}
+
+export interface ProgressBarProps {
+  value: number
+  currentStory: number
+  storyLength: number
+  story: Story
 }

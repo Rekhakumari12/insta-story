@@ -1,42 +1,73 @@
 import { useParams } from 'react-router-dom'
 import { data } from '../data'
 import { StoryPreview } from './StoryPreview'
-import { useState } from 'react'
-import {ReactComponent as LeftArrow} from '../assets/icons/left-arrow.svg'
+import { useEffect, useState } from 'react'
+import { ProgressBar } from './ProgressBar'
 
 export const Story = () => {
   const { username } = useParams()
-  const [currentIndex, setCurrentIndex] = useState(0)
   const userStories = data.filter((user) => user.user.username === username)[0].stories
 
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState<boolean>(false)
+  // const [progress, setProgress] = useState(Array(userStories.length).fill(0))
+  const storyDuration = 5000
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (currentIndex <= userStories.length) handleNextStory()
+    }, storyDuration)
+    return () => clearInterval(interval)
+  }, [currentIndex])
+
   const handlePrevStory = () => {
-    const isFirstStory = currentIndex === 0
-    //going to back component if isFirstStory is false
-    const newIndex = isFirstStory ? userStories.length - 1 : currentIndex - 1
-    setCurrentIndex(newIndex)
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1)
+    }
   }
   const handleNextStory = () => {
-    const isLastSlide = currentIndex === userStories.length - 1
-    const newIndex = isLastSlide ? 0 : currentIndex + 1
-    setCurrentIndex(newIndex)
+    if (currentIndex < userStories.length - 1) {
+      setCurrentIndex((prev) => prev + 1)
+    }
   }
 
-  console.log(userStories)
   return (
     <div className="story_container">
-      <button className="prev_btn" onClick={handlePrevStory}>
-        <
+      <button className="left_arrow" onClick={handlePrevStory}>
+        {'<'}
       </button>
+      <div>
+        <div className="progress_bars">
+          {userStories.map((story) => (
+            <ProgressBar
+              value={storyDuration}
+              currentStory={currentIndex}
+              key={story.storyId}
+              story={story}
+              storyLength={userStories.length}
+            />
+          ))}
+        </div>
+        <div className="stories">
+          {userStories.map((story, index) => {
+            return (
+              <>
+                {index === currentIndex && (
+                  <StoryPreview
+                    story={story}
+                    isPaused={isPaused}
+                    setIsPaused={setIsPaused}
+                    key={story.storyId}
+                  />
+                )}
+              </>
+            )
+          })}
+        </div>
+      </div>
 
-      {userStories.map((story, index) => {
-        return (
-          <div key={story.storyId} className="story">
-            {index === currentIndex && <StoryPreview story={story} />}
-          </div>
-        )
-      })}
       <button className="next_btn" onClick={handleNextStory}>
-        <p>&gt;</p>
+        {'>'}
       </button>
     </div>
   )
