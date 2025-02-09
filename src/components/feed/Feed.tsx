@@ -1,16 +1,28 @@
-import { useState } from 'react'
-import '../App.css'
-import { UserData } from '../type'
-import { data } from '../data'
+import './feed.css'
+import { data } from '../../data'
 import { Link } from 'react-router-dom'
 
-export const Feed = () => {
-  const [userData, _] = useState<UserData[]>(data)
+export interface UserData {
+  id: number
+  user: {
+    id: number
+    name: string
+    profilePic: string
+    username: string
+  }
+  stories: {
+    storyId: number
+    type: string
+    url: string
+    postedAt: string
+  }[]
+}
 
+export const Feed = () => {
   return (
     <div className="main">
       <div className="container">
-        {userData.map((user) => {
+        {data.map((user) => {
           return (
             <Link to={`/stories/${user.user.username}`} key={user.id}>
               <div className="profile_container" key={user.id}>

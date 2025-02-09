@@ -1,4 +1,4 @@
-import { UserData } from './type'
+import { UserData } from './components/feed/Feed'
 
 export const data: UserData[] = [
   {

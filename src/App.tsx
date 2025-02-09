@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Feed } from './components/Feed'
-import { Story } from './components/Story'
+import { Feed } from './components/feed/Feed'
+import { Story } from './components/story/Story'
+import './App.css'
 function App() {
   return (
     <Router>

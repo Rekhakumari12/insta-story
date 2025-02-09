@@ -1,3 +1,4 @@
+import './Button.css'
 interface ButtonProps {
   name: string
   onClickHandle: () => void

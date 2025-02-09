@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { data } from '../data'
-import { StoryPreview } from './StoryPreview'
+import { data } from '../../data'
 import { useState } from 'react'
-import { ProgressBar } from './ProgressBar'
-import { Button } from './Button'
-import { STORY_DURATION } from '../constants'
-
+import { ProgressBar } from '../progress-bar/ProgressBar'
+import { Button } from '../button/Button'
+import { STORY_DURATION } from '../../constants'
+import { StoryPreview } from './StoryPreview'
+import './story.css'
 export const Story = () => {
   const { username } = useParams()
   const navigate = useNavigate()
@@ -60,7 +60,6 @@ export const Story = () => {
             />
           ))}
         </div>
-
         <div className="stories">
           {userStories.map(
             (story, index) =>

@@ -1,5 +1,17 @@
 import { useRef } from 'react'
-import { StoryPreviewProps } from '../type'
+import './story.css'
+
+export interface Story {
+  type: string
+  url: string
+  storyId: number
+}
+
+export interface StoryPreviewProps {
+  story: Story
+  isPaused: boolean
+  setIsPaused: (value: boolean) => void
+}
 
 export const StoryPreview = ({ story, isPaused, setIsPaused }: StoryPreviewProps) => {
   const ref = useRef<HTMLVideoElement>(null)

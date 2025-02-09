@@ -5,7 +5,7 @@
 ## Features
 
 - **Story Playback:**
-  - Supports both video and image stories.
+  - Supports video and image stories.
   - Videos autoplay and can be paused/resumed.
   - Images advance on click.
 - **Animated Progress Bars:**
@@ -15,4 +15,7 @@
 - **Navigation:**
   - Manual navigation with previous/next buttons.
 - **Automatic Redirection:**
-  - Redirects to the feed page once all stories are completed after 5 seconds.
+  - Redirects to the feed page once all stories are completed.
+- **Accessibility:**
+  - Uses semantic HTML elements and proper alt text.
+  - Designed with keyboard navigable controls.

@@ -1,4 +1,11 @@
-import { ProgressBarProps } from '../type'
+import './ProgressBar.css'
+
+export interface ProgressBarProps {
+  className: string
+  value: number
+  onAnimationEnd?: () => void
+  paused: boolean
+}
 
 export const ProgressBar = ({ className, value, onAnimationEnd, paused }: ProgressBarProps) => {
   return (
