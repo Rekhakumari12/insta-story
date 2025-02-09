@@ -3,17 +3,22 @@ import { data } from '../data'
 import { StoryPreview } from './StoryPreview'
 import { useState } from 'react'
 import { ProgressBar } from './ProgressBar'
+import { Button } from './Button'
+import { STORY_DURATION } from '../constants'
 
 export const Story = () => {
   const { username } = useParams()
   const navigate = useNavigate()
 
   // find the user and fallback to an empty array if not found
-  const userStories = data.find((user) => user.user.username === username)?.stories || []
+  const user = data.find((user) => user.user.username === username)
+
+  console.log(user)
+
+  const userStories = user?.stories || []
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
-  const storyDuration = 5 // duration in seconds
 
   const handleNextStory = () => {
     if (currentIndex < userStories.length - 1) {
@@ -42,21 +47,20 @@ export const Story = () => {
 
   return (
     <div className="story_container">
-      <button className="arrow_button" onClick={handlePrevStory}>
-        {'<'}
-      </button>
+      <Button name={'<'} onClickHandle={handlePrevStory} />
       <div>
         <div className="progress_bars">
           {userStories.map((story, index) => (
             <ProgressBar
               key={story.storyId + '-' + (index === currentIndex ? currentIndex : '')} // include currentIndex in key for active story to force remount & animation restart
               className={getProgressClassName(index)}
-              value={storyDuration}
+              value={STORY_DURATION}
               onAnimationEnd={index === currentIndex ? handleNextStory : undefined} // only attach onAnimationEnd to the active progress bar
               paused={index === currentIndex ? isPaused : false}
             />
           ))}
         </div>
+
         <div className="stories">
           {userStories.map(
             (story, index) =>
@@ -71,9 +75,7 @@ export const Story = () => {
           )}
         </div>
       </div>
-      <button className="arrow_button" onClick={handleNextStory}>
-        {'>'}
-      </button>
+      <Button name={'>'} onClickHandle={handleNextStory} />
     </div>
   )
 }

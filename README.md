@@ -1,50 +1,35 @@
-# React + TypeScript + Vite
+# Story Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based story viewer component, inspired by Instagram stories. This component supports both video and image stories with animated progress bars that indicate the story duration. It includes pause/resume functionality and automatically redirects the user to the feed page once all stories have been viewed.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Story Playback:**  
+  Display both video and image stories.
 
-## Expanding the ESLint configuration
+  - Videos autoplay and support pause/resume on mouse events.
+  - Images display with a click-to-advance feature.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Animated Progress Bars:**  
+  Each story has a progress bar that animates from 0% to 100% over the specified duration.
 
-- Configure the top-level `parserOptions` property like this:
+  - The active progress bar’s animation pauses when the story is paused.
+  - On animation end, the progress bar triggers the transition to the next story.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Navigation Controls:**  
+  Manual navigation with previous and next arrow buttons to move between stories.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Automatic Redirection:**  
+  Once all stories are completed, the user is redirected to the feed page using React Router.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+- **Responsive & Interactive UI:**  
+  A clean UI with Material-UI icons and responsive design ensures a seamless viewing experience.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/yourusername/story-viewer.git
+   cd story-viewer
+   ```

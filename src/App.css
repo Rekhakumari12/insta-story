@@ -112,6 +112,8 @@ body {
 .progress_bar_finished {
   width: 100%;
 }
+
+/* button styles */
 .arrow_button {
   color: black;
   border-radius: 50%;
