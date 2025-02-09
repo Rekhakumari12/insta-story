@@ -10,7 +10,6 @@ export const Story = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
-  // const [progress, setProgress] = useState(Array(userStories.length).fill(0))
   const storyDuration = 5000
 
   useEffect(() => {
@@ -31,42 +30,51 @@ export const Story = () => {
     }
   }
 
+  const getProgressClassName = (id: number) => {
+    console.log(id, currentIndex, '===')
+    if (id < currentIndex) {
+      return 'progress progress_bar_finished'
+    } else if (id === currentIndex) {
+      return isPaused
+        ? 'progress progress-bar-active progress-bar-paused'
+        : 'progress progress-bar-active'
+    } else {
+      return 'progress'
+    }
+  }
+
   return (
     <div className="story_container">
-      <button className="left_arrow" onClick={handlePrevStory}>
+      <button className="arrow_button" onClick={handlePrevStory}>
         {'<'}
       </button>
       <div>
         <div className="progress_bars">
           {userStories.map((story) => (
             <ProgressBar
-              value={storyDuration}
-              currentStory={currentIndex}
+              className={getProgressClassName(story.storyId)}
+              value={Math.floor(storyDuration / 1000)}
               key={story.storyId}
-              story={story}
-              storyLength={userStories.length}
             />
           ))}
         </div>
         <div className="stories">
           {userStories.map((story, index) => {
             return (
-              <>
-                {index === currentIndex && (
-                  <StoryPreview
-                    story={story}
-                    isPaused={isPaused}
-                    setIsPaused={setIsPaused}
-                    key={story.storyId}
-                  />
-                )}
-              </>
+              index === currentIndex && (
+                <StoryPreview
+                  story={story}
+                  isPaused={isPaused}
+                  setIsPaused={setIsPaused}
+                  key={story.storyId}
+                />
+              )
             )
           })}
         </div>
       </div>
 
-      <button className="next_btn" onClick={handleNextStory}>
+      <button className="arrow_button" onClick={handleNextStory}>
         {'>'}
       </button>
     </div>
